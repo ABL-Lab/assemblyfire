@@ -13,6 +13,7 @@ from matplotlib import colors
 import matplotlib.gridspec as gridspec
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import seaborn as sns
+from math import ceil
 
 sns.set(style="ticks", context="notebook")
 PATTERN_COLORS = {"A": "#234091", "B": "#57B4D0", "C": "#C4A943", "D": "#7E1F19", "E": "#3F7AB3",
@@ -169,7 +170,8 @@ def plot_cluster_seqs(clusters, t_bins, stim_times, patterns, fig_name):
     clusters = np.reshape(clusters, (1, len(clusters)))
 
     fig = plt.figure(figsize=(20, 8))
-    gs = gridspec.GridSpec(3, 5, height_ratios=[1, 4, 4])
+    num_rows = ceil(len(pattern_matrices.items())/5) + 1
+    gs = gridspec.GridSpec(num_rows, 5, height_ratios=[1, 4, 4])
     ax = fig.add_subplot(gs[0, :])
     divider = make_axes_locatable(ax)
     i_base = ax.imshow(clusters, cmap=cmap, interpolation="nearest", aspect="auto")
