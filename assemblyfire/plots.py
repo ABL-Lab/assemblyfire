@@ -171,7 +171,7 @@ def plot_cluster_seqs(clusters, t_bins, stim_times, patterns, fig_name):
 
     fig = plt.figure(figsize=(20, 8))
     num_rows = ceil(len(pattern_matrices.items())/5) + 1
-    gs = gridspec.GridSpec(num_rows, 5, height_ratios=[1, 4, 4])
+    gs = gridspec.GridSpec(num_rows, 5, height_ratios=[1]+[4]*(num_rows-1))
     ax = fig.add_subplot(gs[0, :])
     divider = make_axes_locatable(ax)
     i_base = ax.imshow(clusters, cmap=cmap, interpolation="nearest", aspect="auto")
@@ -289,7 +289,8 @@ def plot_pattern_clusters(clusters, t_bins, stim_times, patterns, fig_name):
     _, _, _, pattern_counts = group_clusters_by_patterns(clusters, t_bins, stim_times, patterns)
 
     fig = plt.figure(figsize=(20, 8))
-    gs = gridspec.GridSpec(2, 5)
+    num_rows = ceil(len(pattern_counts.items())/5)
+    gs = gridspec.GridSpec(num_rows, 5)
     for i, (pattern_name, counts) in enumerate(pattern_counts.items()):
         ax = fig.add_subplot(gs[np.floor_divide(i, 5), np.mod(i, 5)])
         ax.bar(x, counts, width=0.5, align="center", color=cols)
